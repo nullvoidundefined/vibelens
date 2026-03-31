@@ -986,6 +986,34 @@
   line-height: 1.4;
 }
 
+.vibe-lens-prompt-tool-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.vibe-lens-prompt-tool-item {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--vl-text-heading);
+  background: var(--vl-bg-deep);
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--vl-border);
+}
+
+.vibe-lens-prompt-copy-secondary {
+  background: transparent;
+  border: 1px solid var(--vl-border);
+  color: var(--vl-text-muted);
+}
+
+.vibe-lens-prompt-copy-secondary:hover {
+  background: var(--vl-bg-elevated);
+  color: var(--vl-text-strong);
+}
+
 .vibe-lens-prompt-file-list {
   display: flex;
   flex-wrap: wrap;

@@ -1,6 +1,6 @@
 {
     "name": "vibelens",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "description": "Understand what you built. An interactive learning panel that explains your project's tech stack, architecture, and code — with quizzes and code reviews.",
     "type": "module",
     "main": "./dist/index.cjs.js",
