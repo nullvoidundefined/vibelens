@@ -6,10 +6,15 @@ interface MarkdownViewProps {
   content: string;
 }
 
-// Custom heading renderer that adds severity badge styling
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
+}
+
+// Custom heading renderer that adds severity badge styling and id attributes
 function HeadingRenderer({ level, children, ...props }: any) {
   const text = String(children);
   const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+  const id = slugify(text);
 
   // Detect severity badges in h3 headings (e.g., "### Title — CRITICAL")
   if (level === 3) {
@@ -19,7 +24,7 @@ function HeadingRenderer({ level, children, ...props }: any) {
       const badgeClass = `vl-severity-${severity.toLowerCase()}`;
       const parts = text.split(severity);
       return (
-        <Tag {...props}>
+        <Tag id={id} {...props}>
           {parts[0]}
           <span className={`vl-severity-badge ${badgeClass}`}>{severity}</span>
           {parts[1]}
@@ -28,7 +33,7 @@ function HeadingRenderer({ level, children, ...props }: any) {
     }
   }
 
-  return <Tag {...props}>{children}</Tag>;
+  return <Tag id={id} {...props}>{children}</Tag>;
 }
 
 export function MarkdownView({ content }: MarkdownViewProps) {
@@ -43,11 +48,29 @@ export function MarkdownView({ content }: MarkdownViewProps) {
           h1: (props) => <HeadingRenderer level={1} {...props} />,
           h2: (props) => <HeadingRenderer level={2} {...props} />,
           h3: (props) => <HeadingRenderer level={3} {...props} />,
-          a: ({ href, children, ...props }) => (
-            <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
-              {children}
-            </a>
-          ),
+          a: ({ href, children, ...props }) => {
+            if (href?.startsWith('#')) {
+              return (
+                <a
+                  href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const id = href.slice(1);
+                    const target = document.getElementById(id);
+                    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
+                  {...props}
+                >
+                  {children}
+                </a>
+              );
+            }
+            return (
+              <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+                {children}
+              </a>
+            );
+          },
         }}
       >
         {cleaned}
