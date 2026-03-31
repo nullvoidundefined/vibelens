@@ -144,6 +144,7 @@ export class VibeLens {
     }
 
     const overlay = createOverlay(() => this._closeModal());
+    overlay.classList.add(`vibe-lens-theme-${this.options.theme}`);
     const { panel, body } = createPanel(panelClass, title, () => this._closeModal());
 
     renderContent(body);
