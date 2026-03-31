@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+// CommonJS for maximum compatibility — this runs in the consumer's project context
+const { existsSync, mkdirSync } = require('node:fs');
+const { join } = require('node:path');
 
 const PKG = 'vibelens';
 const DOC_DIR = '.vibelens/docs';
@@ -11,7 +12,6 @@ try {
   const publicDir = join(projectRoot, 'public');
 
   if (!existsSync(publicDir)) {
-    // No public directory — might not be a web project, skip silently
     process.exit(0);
   }
 

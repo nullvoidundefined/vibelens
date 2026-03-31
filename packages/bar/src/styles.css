@@ -3,6 +3,52 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
+   Theme Variables
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-theme-dark {
+  --vl-bg-deep: #0f172a;
+  --vl-bg-surface: #1e293b;
+  --vl-bg-elevated: #334155;
+  --vl-border: #334155;
+  --vl-text: #cbd5e1;
+  --vl-text-strong: #f1f5f9;
+  --vl-text-heading: #e2e8f0;
+  --vl-text-muted: #94a3b8;
+  --vl-text-dim: #64748b;
+  --vl-text-faint: #475569;
+  --vl-accent: #3b82f6;
+  --vl-accent-hover: #2563eb;
+  --vl-link: #60a5fa;
+  --vl-link-hover: #93bbfd;
+  --vl-code-bg: #0f172a;
+  --vl-overlay-bg: rgba(0, 0, 0, 0.75);
+  --vl-scrollbar-track: #0f172a;
+  --vl-scrollbar-thumb: #334155;
+}
+
+.vibe-lens-theme-light {
+  --vl-bg-deep: #f1f5f9;
+  --vl-bg-surface: #ffffff;
+  --vl-bg-elevated: #e2e8f0;
+  --vl-border: #cbd5e1;
+  --vl-text: #334155;
+  --vl-text-strong: #0f172a;
+  --vl-text-heading: #1e293b;
+  --vl-text-muted: #64748b;
+  --vl-text-dim: #94a3b8;
+  --vl-text-faint: #94a3b8;
+  --vl-accent: #2563eb;
+  --vl-accent-hover: #1d4ed8;
+  --vl-link: #2563eb;
+  --vl-link-hover: #1d4ed8;
+  --vl-code-bg: #f1f5f9;
+  --vl-overlay-bg: rgba(0, 0, 0, 0.4);
+  --vl-scrollbar-track: #f1f5f9;
+  --vl-scrollbar-thumb: #cbd5e1;
+}
+
+/* --------------------------------------------------------------------------
    Nav Bar
    -------------------------------------------------------------------------- */
 
@@ -143,7 +189,7 @@
   position: fixed;
   inset: 0;
   z-index: 2147483647;
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--vl-overlay-bg);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -158,8 +204,8 @@
 }
 
 .vibe-lens-panel {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: var(--vl-bg-surface);
+  border: 1px solid var(--vl-border);
   border-radius: 16px;
   width: 100%;
   max-width: 800px;
@@ -185,13 +231,13 @@
   justify-content: space-between;
   padding: 1.5rem 2.5rem 1rem;
   flex-shrink: 0;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid var(--vl-border);
 }
 
 .vibe-lens-panel-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
@@ -199,7 +245,7 @@
 .vibe-lens-close {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   font-size: 1.75rem;
   cursor: pointer;
   line-height: 1;
@@ -209,7 +255,7 @@
 }
 
 .vibe-lens-close:hover {
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
 }
 
 .vibe-lens-panel-body {
@@ -223,11 +269,11 @@
 }
 
 .vibe-lens-panel-body::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--vl-scrollbar-track);
 }
 
 .vibe-lens-panel-body::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--vl-scrollbar-thumb);
   border-radius: 3px;
 }
 
@@ -244,7 +290,7 @@
 
 .vibe-lens-skeleton-line {
   height: 14px;
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background: linear-gradient(90deg, var(--vl-bg-surface) 25%, var(--vl-bg-elevated) 50%, var(--vl-bg-surface) 75%);
   background-size: 200% 100%;
   border-radius: 6px;
   animation: vibe-lens-shimmer 1.5s ease-in-out infinite;
@@ -289,7 +335,7 @@
    -------------------------------------------------------------------------- */
 
 .vibe-lens-md {
-  color: #cbd5e1;
+  color: var(--vl-text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 0.95rem;
   line-height: 1.7;
@@ -298,21 +344,21 @@
 .vibe-lens-md h1 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
   margin: 0 0 1rem;
 }
 
 .vibe-lens-md h2 {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
   margin: 2rem 0 0.75rem;
 }
 
 .vibe-lens-md h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--vl-text-heading);
   margin: 1.5rem 0 0.5rem;
 }
 
@@ -321,25 +367,25 @@
 }
 
 .vibe-lens-md a {
-  color: #60a5fa;
+  color: var(--vl-link);
   text-decoration: underline;
 }
 
 .vibe-lens-md a:hover {
-  color: #93bbfd;
+  color: var(--vl-link-hover);
 }
 
 .vibe-lens-md code {
-  background: #0f172a;
+  background: var(--vl-code-bg);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.85rem;
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-  color: #e2e8f0;
+  color: var(--vl-text-heading);
 }
 
 .vibe-lens-md pre {
-  background: #0f172a;
+  background: var(--vl-code-bg);
   border-radius: 8px;
   padding: 1rem;
   overflow-x: auto;
@@ -350,7 +396,7 @@
   background: none;
   padding: 0;
   font-size: 0.875rem;
-  color: #e2e8f0;
+  color: var(--vl-text-heading);
 }
 
 .vibe-lens-md ul,
@@ -365,16 +411,16 @@
 }
 
 .vibe-lens-md blockquote {
-  border-left: 3px solid #3b82f6;
+  border-left: 3px solid var(--vl-accent);
   padding-left: 1rem;
   margin: 0 0 1rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   font-style: italic;
 }
 
 .vibe-lens-md hr {
   border: none;
-  border-top: 1px solid #334155;
+  border-top: 1px solid var(--vl-border);
   margin: 2rem 0;
 }
 
@@ -384,8 +430,33 @@
 }
 
 .vibe-lens-md strong {
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
   font-weight: 600;
+}
+
+.vibe-lens-md table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+}
+
+.vibe-lens-md th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--vl-text-strong);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--vl-border);
+}
+
+.vibe-lens-md td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--vl-border);
+  color: var(--vl-text);
+}
+
+.vibe-lens-md tr:last-child td {
+  border-bottom: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -455,13 +526,13 @@
 .vibe-lens-quiz-app-name {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   margin: 0 0 0.5rem;
 }
 
 .vibe-lens-quiz-card {
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: var(--vl-bg-deep);
+  border: 1px solid var(--vl-border);
   border-radius: 12px;
   padding: 1.5rem;
   transition: border-color 0.2s;
@@ -479,14 +550,14 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #475569;
+  color: var(--vl-text-faint);
   margin-bottom: 0.5rem;
 }
 
 .vibe-lens-quiz-question-text {
   font-size: 1rem;
   font-weight: 500;
-  color: #e2e8f0;
+  color: var(--vl-text-heading);
   margin: 0 0 1rem;
   line-height: 1.5;
 }
@@ -498,22 +569,22 @@
 }
 
 .vibe-lens-quiz-option {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: var(--vl-bg-surface);
+  border: 1px solid var(--vl-border);
   border-radius: 8px;
   padding: 0.625rem 1rem;
   text-align: left;
   font-size: 0.9rem;
-  color: #cbd5e1;
+  color: var(--vl-text);
   cursor: pointer;
   font-family: inherit;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
 .vibe-lens-quiz-option:hover:not(:disabled) {
-  background: #334155;
-  border-color: #475569;
-  color: #f1f5f9;
+  background: var(--vl-bg-elevated);
+  border-color: var(--vl-text-faint);
+  color: var(--vl-text-strong);
 }
 
 .vibe-lens-quiz-option:disabled {
@@ -542,7 +613,7 @@
   gap: 0.5rem;
   margin-top: 0.75rem;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   font-style: italic;
 }
 
@@ -553,8 +624,8 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #334155;
-  color: #94a3b8;
+  background: var(--vl-bg-elevated);
+  color: var(--vl-text-muted);
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 600;
@@ -565,16 +636,16 @@
 .vibe-lens-quiz-explanation {
   margin-top: 0.5rem;
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   line-height: 1.6;
   padding: 0.75rem;
-  background: #1e293b;
+  background: var(--vl-bg-surface);
   border-radius: 6px;
-  border-left: 3px solid #3b82f6;
+  border-left: 3px solid var(--vl-accent);
 }
 
 .vibe-lens-quiz-empty {
-  color: #64748b;
+  color: var(--vl-text-dim);
   font-size: 0.9rem;
   padding: 2rem 0;
   text-align: center;
@@ -584,19 +655,19 @@
 .vibe-lens-quiz-grade {
   font-size: 3rem;
   font-weight: 800;
-  color: #3b82f6;
+  color: var(--vl-accent);
   line-height: 1;
 }
 
 .vibe-lens-quiz-score {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
 }
 
 .vibe-lens-quiz-pct {
   font-size: 1.25rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
 }
 
 /* --------------------------------------------------------------------------
@@ -605,7 +676,7 @@
 
 .vibe-lens-quiz-subtitle {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--vl-text-dim);
   margin: 0 0 2rem;
 }
 
@@ -616,8 +687,8 @@
   gap: 1.5rem;
   margin-bottom: 2rem;
   padding: 2rem;
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: var(--vl-bg-deep);
+  border: 1px solid var(--vl-border);
   border-radius: 12px;
 }
 
@@ -631,13 +702,13 @@
 .vibe-lens-quiz-stat-value {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
   line-height: 1;
 }
 
 .vibe-lens-quiz-stat-label {
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--vl-text-dim);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -646,7 +717,7 @@
   display: block;
   width: 100%;
   padding: 0.875rem 1.5rem;
-  background: #3b82f6;
+  background: var(--vl-accent);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -658,7 +729,7 @@
 }
 
 .vibe-lens-quiz-start-btn:hover {
-  background: #2563eb;
+  background: var(--vl-accent-hover);
 }
 
 /* --------------------------------------------------------------------------
@@ -724,7 +795,7 @@
   justify-content: space-between;
   margin-bottom: 0.5rem;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
 }
 
 .vibe-lens-quiz-progress-text {
@@ -738,7 +809,7 @@
 .vibe-lens-quiz-progress-bar {
   width: 100%;
   height: 4px;
-  background: #334155;
+  background: var(--vl-bg-elevated);
   border-radius: 2px;
   overflow: hidden;
   margin-bottom: 1.5rem;
@@ -746,7 +817,7 @@
 
 .vibe-lens-quiz-progress-fill {
   height: 100%;
-  background: #3b82f6;
+  background: var(--vl-accent);
   border-radius: 2px;
   transition: width 0.3s ease;
 }
@@ -760,7 +831,7 @@
   width: 100%;
   margin-top: 1rem;
   padding: 0.75rem 1.25rem;
-  background: #3b82f6;
+  background: var(--vl-accent);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -772,7 +843,7 @@
 }
 
 .vibe-lens-quiz-next-btn:hover {
-  background: #2563eb;
+  background: var(--vl-accent-hover);
 }
 
 /* --------------------------------------------------------------------------
@@ -791,13 +862,13 @@
 .vibe-lens-quiz-results-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
   margin: 0 0 1rem;
 }
 
 .vibe-lens-quiz-result-message {
   font-size: 0.95rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   line-height: 1.6;
   max-width: 28rem;
   margin: 0.5rem 0 1.5rem;
@@ -808,13 +879,13 @@
    -------------------------------------------------------------------------- */
 
 .vibe-lens-anchor-link {
-  color: #60a5fa;
+  color: var(--vl-link);
   text-decoration: underline;
   cursor: pointer;
 }
 
 .vibe-lens-anchor-link:hover {
-  color: #93bbfd;
+  color: var(--vl-link-hover);
 }
 
 /* --------------------------------------------------------------------------
@@ -838,13 +909,13 @@
 .vibe-lens-prompt-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
   margin: 0 0 0.5rem;
 }
 
 .vibe-lens-prompt-desc {
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   line-height: 1.6;
   margin: 0;
 }
@@ -852,19 +923,19 @@
 .vibe-lens-prompt-path,
 .vibe-lens-prompt-stamp {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--vl-text-muted);
   margin-bottom: 0.5rem;
   line-height: 1.6;
 }
 
 .vibe-lens-prompt-path code,
 .vibe-lens-prompt-stamp code {
-  background: #0f172a;
+  background: var(--vl-code-bg);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.8rem;
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-  color: #e2e8f0;
+  color: var(--vl-text-heading);
 }
 
 .vibe-lens-prompt-copy-btn {
@@ -872,7 +943,7 @@
   width: 100%;
   padding: 0.75rem 1.25rem;
   margin: 1.25rem 0;
-  background: #3b82f6;
+  background: var(--vl-accent);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -884,7 +955,7 @@
 }
 
 .vibe-lens-prompt-copy-btn:hover {
-  background: #2563eb;
+  background: var(--vl-accent-hover);
 }
 
 .vibe-lens-prompt-copy-success {
@@ -925,11 +996,11 @@
 .vibe-lens-prompt-file-item {
   font-size: 0.8rem;
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-  color: #94a3b8;
-  background: #0f172a;
+  color: var(--vl-text-muted);
+  background: var(--vl-bg-deep);
   padding: 0.25rem 0.625rem;
   border-radius: 6px;
-  border: 1px solid #334155;
+  border: 1px solid var(--vl-border);
 }
 
 .vibe-lens-prompt-list {
@@ -940,8 +1011,8 @@
 }
 
 .vibe-lens-prompt-item {
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: var(--vl-bg-deep);
+  border: 1px solid var(--vl-border);
   border-radius: 10px;
   padding: 1rem;
 }
@@ -956,14 +1027,14 @@
 .vibe-lens-prompt-item-label {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: var(--vl-text-strong);
 }
 
 .vibe-lens-prompt-item-file {
   font-size: 0.8rem;
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-  color: #64748b;
-  background: #1e293b;
+  color: var(--vl-text-dim);
+  background: var(--vl-bg-surface);
   padding: 2px 6px;
   border-radius: 4px;
 }
@@ -975,6 +1046,6 @@
 }
 
 .vibe-lens-link-generate {
-  color: #3b82f6;
+  color: var(--vl-accent);
   font-weight: 500;
 }

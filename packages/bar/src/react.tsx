@@ -16,6 +16,7 @@ export default function VibeLensComponent(props: VibeLensProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!containerRef.current) return;
     const instance = new VibeLens({ basePath, position, fixed, appName, theme });
     instance.mount(containerRef.current);
     return () => instance.destroy();

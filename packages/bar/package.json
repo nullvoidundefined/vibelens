@@ -1,6 +1,6 @@
 {
     "name": "vibelens",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "A nav bar component that links to app documentation modals (summary, technical summary, technical overview, quiz)",
     "type": "module",
     "main": "./dist/index.cjs.js",

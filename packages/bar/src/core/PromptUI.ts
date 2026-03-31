@@ -30,7 +30,7 @@ export function buildGenerateUI(basePath: string, navLinks: NavLink[]): HTMLElem
   header.appendChild(title);
 
   const desc = el('p', 'vibe-lens-prompt-desc');
-  desc.textContent = 'Grab this prompt, drop it into ChatGPT or Claude, and it\'ll explain your entire project to you. You\'ll get a summary, a guide to your tech stack, architecture docs, a quiz, and a code review.';
+  desc.textContent = 'Copy this prompt and paste it into an AI tool that can read your codebase — like Claude Code, Cursor, Windsurf, GitHub Copilot, or ChatGPT with file uploads. It\'ll generate docs that explain your project to you. VibeLens never reads, copies, or modifies your code.';
   header.appendChild(desc);
   wrapper.appendChild(header);
 
@@ -39,7 +39,7 @@ export function buildGenerateUI(basePath: string, navLinks: NavLink[]): HTMLElem
   warningIcon.textContent = '\u26a0';
   warning.appendChild(warningIcon);
   const warningText = el('span');
-  warningText.textContent = 'This copies a prompt to your clipboard — you\'ll paste it into your own AI tool. Nothing is sent anywhere automatically. If you\'re working on a team project, check with your org before sharing code with an AI.';
+  warningText.textContent = 'VibeLens does not access, transmit, or store your code. The prompt is copied to your clipboard — you choose which AI tool to use. If you\'re working on a team project, check with your org before sharing code with any AI tool.';
   warning.appendChild(warningText);
   wrapper.appendChild(warning);
 

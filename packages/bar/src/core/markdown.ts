@@ -64,6 +64,41 @@ export function markdownToHtml(md: string): string {
     return `<ol>${items}</ol>`;
   });
 
+  // Tables (before images/links so table content can contain inline formatting)
+  html = html.replace(
+    /((?:^\|.+\|$\n?){2,})/gm,
+    (tableBlock) => {
+      const rows = tableBlock.trim().split('\n');
+      if (rows.length < 2) return tableBlock;
+
+      const parseRow = (row: string): string[] =>
+        row.split('|').slice(1, -1).map((cell) => cell.trim());
+
+      const headerCells = parseRow(rows[0]);
+      // Skip separator row (row with ---)
+      const isSeparator = (row: string): boolean => /^\|[\s:-]+\|/.test(row);
+      const dataStartIndex = isSeparator(rows[1]) ? 2 : 1;
+
+      let table = '<table><thead><tr>';
+      for (const cell of headerCells) {
+        table += `<th>${cell}</th>`;
+      }
+      table += '</tr></thead><tbody>';
+
+      for (let i = dataStartIndex; i < rows.length; i++) {
+        if (isSeparator(rows[i])) continue;
+        const cells = parseRow(rows[i]);
+        table += '<tr>';
+        for (const cell of cells) {
+          table += `<td>${cell}</td>`;
+        }
+        table += '</tr>';
+      }
+      table += '</tbody></table>';
+      return table;
+    }
+  );
+
   // Images (before links)
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img alt="$1" src="$2">');
 
@@ -72,7 +107,7 @@ export function markdownToHtml(md: string): string {
   html = html.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
     (_, text, href) => {
-      const trimmed = href.trim().toLowerCase();
+      const trimmed = href.replace(/[\s\x00-\x1f]/g, '').toLowerCase();
       if (/^(javascript|data|vbscript):/.test(trimmed)) {
         return text;
       }
