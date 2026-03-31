@@ -1,7 +1,7 @@
 {
     "name": "vibelens",
-    "version": "2.0.1",
-    "description": "A nav bar component that links to app documentation modals (summary, technical summary, technical overview, quiz)",
+    "version": "2.0.2",
+    "description": "Understand what you built. An interactive learning panel that explains your project's tech stack, architecture, and code — with quizzes and code reviews.",
     "type": "module",
     "main": "./dist/index.cjs.js",
     "module": "./dist/index.es.js",
@@ -59,7 +59,7 @@
         "vibelens:format:check": "prettier --config prettier.config.vibelens.js --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
         "vibelens:lint": "eslint --config eslint.config.vibelens.js .",
         "vibelens:lint:fix": "eslint --config eslint.config.vibelens.js . --fix",
-        "postinstall": "node bin/postinstall.js"
+        "postinstall": "node bin/postinstall.cjs"
     },
     "keywords": [
         "react",
