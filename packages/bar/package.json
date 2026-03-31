@@ -1,6 +1,6 @@
 {
     "name": "vibelens",
-    "version": "2.0.4",
+    "version": "2.1.0",
     "description": "Understand what you built. An interactive learning panel that explains your project's tech stack, architecture, and code — with quizzes and code reviews.",
     "type": "module",
     "main": "./dist/index.cjs.js",
@@ -44,10 +44,14 @@
         },
         "./styles.css": "./src/styles.css"
     },
+    "bin": {
+        "vibelens": "./bin/serve.js"
+    },
     "files": [
         "dist/",
         "types/",
         "src/",
+        "viewer/",
         "application-documentation-prompts/",
         "bin/"
     ],
@@ -62,11 +66,13 @@
         "postinstall": "node bin/postinstall.cjs"
     },
     "keywords": [
-        "react",
         "documentation",
-        "nav-bar",
-        "markdown",
-        "quiz"
+        "learning",
+        "vibe-coding",
+        "code-review",
+        "quiz",
+        "tech-stack",
+        "developer-tools"
     ],
     "author": "vibelens",
     "license": "MIT",
@@ -127,7 +133,11 @@
         "vite-plugin-solid": "^2.0.0"
     },
     "dependencies": {
-        "dompurify": "^3.2.3"
+        "dompurify": "^3.2.3",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-markdown": "^9.0.0",
+        "remark-gfm": "^4.0.0"
     },
     "engines": {
         "node": ">=18"
