@@ -1,0 +1,135 @@
+{
+    "name": "vibelens",
+    "version": "2.0.0",
+    "description": "A nav bar component that links to app documentation modals (summary, technical summary, technical overview, quiz)",
+    "type": "module",
+    "main": "./dist/index.cjs.js",
+    "module": "./dist/index.es.js",
+    "types": "./types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./types/index.d.ts",
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.cjs.js"
+        },
+        "./vanilla": {
+            "types": "./types/vanilla.d.ts",
+            "import": "./dist/vanilla.es.js",
+            "require": "./dist/vanilla.cjs.js"
+        },
+        "./vue": {
+            "types": "./types/vue.d.ts",
+            "import": "./dist/vue.es.js",
+            "require": "./dist/vue.cjs.js"
+        },
+        "./svelte": {
+            "import": "./dist/svelte.es.js",
+            "require": "./dist/svelte.cjs.js"
+        },
+        "./solid": {
+            "types": "./types/solid.d.ts",
+            "import": "./dist/solid.es.js",
+            "require": "./dist/solid.cjs.js"
+        },
+        "./preact": {
+            "types": "./types/preact.d.ts",
+            "import": "./dist/preact.es.js",
+            "require": "./dist/preact.cjs.js"
+        },
+        "./angular": "./src/angular.ts",
+        "./web-component": {
+            "types": "./types/web-component.d.ts",
+            "import": "./dist/web-component.es.js",
+            "require": "./dist/web-component.cjs.js"
+        },
+        "./styles.css": "./src/styles.css"
+    },
+    "files": [
+        "dist/",
+        "types/",
+        "src/",
+        "application-documentation-prompts/",
+        "bin/"
+    ],
+    "scripts": {
+        "build": "vite build && tsc --emitDeclarationOnly",
+        "build:types": "tsc --emitDeclarationOnly",
+        "dev": "vite build --watch",
+        "vibelens:format": "prettier --config prettier.config.vibelens.js --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+        "vibelens:format:check": "prettier --config prettier.config.vibelens.js --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+        "vibelens:lint": "eslint --config eslint.config.vibelens.js .",
+        "vibelens:lint:fix": "eslint --config eslint.config.vibelens.js . --fix",
+        "postinstall": "node bin/postinstall.js"
+    },
+    "keywords": [
+        "react",
+        "documentation",
+        "nav-bar",
+        "markdown",
+        "quiz"
+    ],
+    "author": "vibelens",
+    "license": "MIT",
+    "peerDependencies": {
+        "@angular/common": ">=14",
+        "@angular/core": ">=14",
+        "preact": ">=10",
+        "react": ">=18",
+        "react-dom": ">=18",
+        "solid-js": ">=1",
+        "svelte": ">=4",
+        "vue": ">=3"
+    },
+    "peerDependenciesMeta": {
+        "react": {
+            "optional": true
+        },
+        "react-dom": {
+            "optional": true
+        },
+        "vue": {
+            "optional": true
+        },
+        "svelte": {
+            "optional": true
+        },
+        "solid-js": {
+            "optional": true
+        },
+        "preact": {
+            "optional": true
+        },
+        "@angular/core": {
+            "optional": true
+        },
+        "@angular/common": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@sveltejs/vite-plugin-svelte": "^5.0.0",
+        "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+        "@types/dompurify": "^3.0.5",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "@typescript-eslint/parser": "^8.57.2",
+        "@vitejs/plugin-react": "^4.3.4",
+        "eslint": "^9.39.4",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-security": "^3.0.1",
+        "eslint-plugin-unused-imports": "^4.4.1",
+        "globals": "^15.15.0",
+        "prettier": "^3.8.1",
+        "svelte": "^5.0.0",
+        "typescript": "^5.7.0",
+        "typescript-eslint": "^8.57.2",
+        "vite": "^6.0.0",
+        "vite-plugin-solid": "^2.0.0"
+    },
+    "dependencies": {
+        "dompurify": "^3.2.3"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}

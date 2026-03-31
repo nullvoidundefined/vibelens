@@ -1,0 +1,980 @@
+/* ==========================================================================
+   VibeLens — all styles for the nav bar, modals, markdown reader, and quiz
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Nav Bar
+   -------------------------------------------------------------------------- */
+
+.vibe-lens {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.vibe-lens-fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 2147483646;
+  opacity: 0.15;
+  transform: translateY(6px);
+}
+
+.vibe-lens-fixed:hover,
+.vibe-lens-fixed:focus-within {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vibe-lens-top {
+  top: 0;
+}
+
+.vibe-lens-bottom {
+  bottom: 0;
+}
+
+/* Dark theme */
+.vibe-lens-theme-dark {
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+}
+
+.vibe-lens-theme-dark.vibe-lens-bottom {
+  border-bottom: none;
+  border-top: 1px solid #1e293b;
+}
+
+.vibe-lens-theme-dark.vibe-lens-fixed {
+  background: transparent;
+  border: none;
+}
+
+/* Light theme */
+.vibe-lens-theme-light {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.vibe-lens-theme-light.vibe-lens-bottom {
+  border-bottom: none;
+  border-top: 1px solid #e2e8f0;
+}
+
+.vibe-lens-theme-light.vibe-lens-fixed {
+  background: transparent;
+  border: none;
+}
+
+.vibe-lens-app-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: auto;
+  white-space: nowrap;
+}
+
+.vibe-lens-theme-dark .vibe-lens-app-name {
+  color: #e2e8f0;
+}
+
+.vibe-lens-theme-light .vibe-lens-app-name {
+  color: #1e293b;
+}
+
+.vibe-lens-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  margin-left: auto;
+}
+
+.vibe-lens-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+  text-decoration: none;
+}
+
+.vibe-lens-theme-dark .vibe-lens-link {
+  color: #94a3b8;
+}
+
+.vibe-lens-theme-dark .vibe-lens-link:hover {
+  color: #e2e8f0;
+  background: #1e293b;
+}
+
+.vibe-lens-theme-dark .vibe-lens-link-active {
+  color: #3b82f6;
+}
+
+.vibe-lens-theme-light .vibe-lens-link {
+  color: #64748b;
+}
+
+.vibe-lens-theme-light .vibe-lens-link:hover {
+  color: #1e293b;
+  background: #e2e8f0;
+}
+
+.vibe-lens-theme-light .vibe-lens-link-active {
+  color: #2563eb;
+}
+
+/* --------------------------------------------------------------------------
+   Overlay + Panel (shared by MarkdownModal and QuizModal)
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: vibe-lens-fade-in 0.15s ease;
+}
+
+@keyframes vibe-lens-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.vibe-lens-panel {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: vibe-lens-slide-up 0.2s ease;
+}
+
+.vibe-lens-panel-wide {
+  max-width: 960px;
+}
+
+@keyframes vibe-lens-slide-up {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.vibe-lens-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2.5rem 1rem;
+  flex-shrink: 0;
+  border-bottom: 1px solid #334155;
+}
+
+.vibe-lens-panel-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vibe-lens-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.75rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.25rem;
+  transition: color 0.15s;
+  font-family: inherit;
+}
+
+.vibe-lens-close:hover {
+  color: #f1f5f9;
+}
+
+.vibe-lens-panel-body {
+  padding: 2rem 2.5rem 2.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.vibe-lens-panel-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vibe-lens-panel-body::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.vibe-lens-panel-body::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Loading Skeleton
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+
+.vibe-lens-skeleton-line {
+  height: 14px;
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: vibe-lens-shimmer 1.5s ease-in-out infinite;
+}
+
+.vibe-lens-skeleton-line-title {
+  height: 20px;
+  width: 60%;
+  margin-bottom: 0.5rem;
+}
+
+.vibe-lens-skeleton-line-short {
+  width: 45%;
+}
+
+@keyframes vibe-lens-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Fade-in Transition (quiz cards, results)
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-fade-in {
+  animation: vibe-lens-card-enter 0.25s ease-out;
+}
+
+@keyframes vibe-lens-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Markdown Reader
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-md {
+  color: #cbd5e1;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.vibe-lens-md h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 1rem;
+}
+
+.vibe-lens-md h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 2rem 0 0.75rem;
+}
+
+.vibe-lens-md h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.vibe-lens-md p {
+  margin: 0 0 1rem;
+}
+
+.vibe-lens-md a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.vibe-lens-md a:hover {
+  color: #93bbfd;
+}
+
+.vibe-lens-md code {
+  background: #0f172a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  color: #e2e8f0;
+}
+
+.vibe-lens-md pre {
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0 0 1rem;
+}
+
+.vibe-lens-md pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.875rem;
+  color: #e2e8f0;
+}
+
+.vibe-lens-md ul,
+.vibe-lens-md ol {
+  padding-left: 1.5rem;
+  margin: 0 0 1rem;
+}
+
+.vibe-lens-md li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.vibe-lens-md blockquote {
+  border-left: 3px solid #3b82f6;
+  padding-left: 1rem;
+  margin: 0 0 1rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.vibe-lens-md hr {
+  border: none;
+  border-top: 1px solid #334155;
+  margin: 2rem 0;
+}
+
+.vibe-lens-md img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.vibe-lens-md strong {
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Severity Badges (Review document)
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-severity-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  border: 1px solid;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vibe-lens-severity-critical {
+  background: #450a0a;
+  border-color: #dc2626;
+  color: #fecaca;
+}
+
+.vibe-lens-severity-high {
+  background: #431407;
+  border-color: #ea580c;
+  color: #fed7aa;
+}
+
+.vibe-lens-severity-medium {
+  background: #422006;
+  border-color: #d97706;
+  color: #fde68a;
+}
+
+.vibe-lens-severity-low {
+  background: #1a2e05;
+  border-color: #65a30d;
+  color: #d9f99d;
+}
+
+.vibe-lens-severity-info {
+  background: #0c1a3d;
+  border-color: #3b82f6;
+  color: #bfdbfe;
+}
+
+/* Severity badge inside h3 — adjust positioning */
+.vibe-lens-md h3 .vibe-lens-severity-badge {
+  font-size: 0.65rem;
+  position: relative;
+  top: -1px;
+}
+
+/* --------------------------------------------------------------------------
+   Quiz View
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-quiz-view {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vibe-lens-quiz-app-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin: 0 0 0.5rem;
+}
+
+.vibe-lens-quiz-card {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.vibe-lens-quiz-card.vibe-lens-correct {
+  border-color: #16a34a;
+}
+
+.vibe-lens-quiz-card.vibe-lens-incorrect {
+  border-color: #dc2626;
+}
+
+.vibe-lens-quiz-question-num {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.vibe-lens-quiz-question-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.vibe-lens-quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vibe-lens-quiz-option {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0.625rem 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.vibe-lens-quiz-option:hover:not(:disabled) {
+  background: #334155;
+  border-color: #475569;
+  color: #f1f5f9;
+}
+
+.vibe-lens-quiz-option:disabled {
+  cursor: default;
+}
+
+.vibe-lens-option-correct {
+  background: #14532d;
+  border-color: #16a34a;
+  color: #bbf7d0;
+}
+
+.vibe-lens-option-wrong {
+  background: #450a0a;
+  border-color: #dc2626;
+  color: #fecaca;
+}
+
+.vibe-lens-option-dim {
+  opacity: 0.4;
+}
+
+.vibe-lens-quiz-clarification {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.vibe-lens-quiz-clarification-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #334155;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.vibe-lens-quiz-explanation {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  padding: 0.75rem;
+  background: #1e293b;
+  border-radius: 6px;
+  border-left: 3px solid #3b82f6;
+}
+
+.vibe-lens-quiz-empty {
+  color: #64748b;
+  font-size: 0.9rem;
+  padding: 2rem 0;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vibe-lens-quiz-grade {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #3b82f6;
+  line-height: 1;
+}
+
+.vibe-lens-quiz-score {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.vibe-lens-quiz-pct {
+  font-size: 1.25rem;
+  color: #94a3b8;
+}
+
+/* --------------------------------------------------------------------------
+   Quiz — Start Screen
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-quiz-subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 2rem;
+}
+
+.vibe-lens-quiz-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+}
+
+.vibe-lens-quiz-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.vibe-lens-quiz-stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1;
+}
+
+.vibe-lens-quiz-stat-label {
+  font-size: 0.85rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vibe-lens-quiz-start-btn {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.vibe-lens-quiz-start-btn:hover {
+  background: #2563eb;
+}
+
+/* --------------------------------------------------------------------------
+   Quiz — Difficulty Pills & Badges
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-quiz-difficulty-breakdown {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vibe-lens-quiz-diff-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.vibe-lens-quiz-diff-easy {
+  background: #14532d;
+  border-color: #16a34a;
+  color: #bbf7d0;
+}
+
+.vibe-lens-quiz-diff-medium {
+  background: #422006;
+  border-color: #d97706;
+  color: #fde68a;
+}
+
+.vibe-lens-quiz-diff-hard {
+  background: #450a0a;
+  border-color: #dc2626;
+  color: #fecaca;
+}
+
+.vibe-lens-quiz-diff-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: 0.75rem;
+  border: 1px solid;
+  vertical-align: middle;
+}
+
+/* --------------------------------------------------------------------------
+   Quiz — Progress Bar
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-quiz-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.vibe-lens-quiz-progress-text {
+  font-weight: 500;
+}
+
+.vibe-lens-quiz-score-text {
+  font-weight: 500;
+}
+
+.vibe-lens-quiz-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #334155;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.vibe-lens-quiz-progress-fill {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Quiz — Next / See Results Button
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-quiz-next-btn {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.vibe-lens-quiz-next-btn:hover {
+  background: #2563eb;
+}
+
+/* --------------------------------------------------------------------------
+   Quiz — Results Screen
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-quiz-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 2rem 0;
+}
+
+.vibe-lens-quiz-results-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 1rem;
+}
+
+.vibe-lens-quiz-result-message {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  max-width: 28rem;
+  margin: 0.5rem 0 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Anchor Links
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-anchor-link {
+  color: #60a5fa;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.vibe-lens-anchor-link:hover {
+  color: #93bbfd;
+}
+
+/* --------------------------------------------------------------------------
+   Prompt UI (shown when document is missing or outdated)
+   -------------------------------------------------------------------------- */
+
+.vibe-lens-prompt-view {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vibe-lens-prompt-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.vibe-lens-prompt-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.vibe-lens-prompt-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 0.5rem;
+}
+
+.vibe-lens-prompt-desc {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.vibe-lens-prompt-path,
+.vibe-lens-prompt-stamp {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.vibe-lens-prompt-path code,
+.vibe-lens-prompt-stamp code {
+  background: #0f172a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  color: #e2e8f0;
+}
+
+.vibe-lens-prompt-copy-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  margin: 1.25rem 0;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.vibe-lens-prompt-copy-btn:hover {
+  background: #2563eb;
+}
+
+.vibe-lens-prompt-copy-success {
+  background: #16a34a;
+}
+
+.vibe-lens-prompt-copy-success:hover {
+  background: #15803d;
+}
+
+.vibe-lens-prompt-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(234, 179, 8, 0.08);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  border-radius: 8px;
+  font-size: 0.825rem;
+  color: #fde68a;
+  line-height: 1.5;
+}
+
+.vibe-lens-prompt-warning-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.vibe-lens-prompt-file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.vibe-lens-prompt-file-item {
+  font-size: 0.8rem;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  color: #94a3b8;
+  background: #0f172a;
+  padding: 0.25rem 0.625rem;
+  border-radius: 6px;
+  border: 1px solid #334155;
+}
+
+.vibe-lens-prompt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.vibe-lens-prompt-item {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.vibe-lens-prompt-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.vibe-lens-prompt-item-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.vibe-lens-prompt-item-file {
+  font-size: 0.8rem;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  color: #64748b;
+  background: #1e293b;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.vibe-lens-prompt-item .vibe-lens-prompt-copy-btn {
+  margin: 0;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+.vibe-lens-link-generate {
+  color: #3b82f6;
+  font-weight: 500;
+}

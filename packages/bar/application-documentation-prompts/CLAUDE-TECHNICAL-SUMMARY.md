@@ -1,0 +1,216 @@
+# Generating Technical Summary Content
+
+This prompt defines how to generate the `technical-summary.md` file. The Technical Summary is the second link in the VibeLens and serves as a mid-level technical overview for developers who want to understand the system without reading the full codebase.
+
+---
+
+## Purpose
+
+The Technical Summary answers: **"How is this thing built?"** It's a mid-level overview for when you want to understand the architecture without reading every file. Written in technical language but still approachable — it names specific tools and explains why they're used.
+
+## CRITICAL: Privacy & Security
+
+**DO NOT** read, reference, or include content from `.env` files, credentials, API keys, secrets, PII, PHI, database dumps with real user data, or any file that could compromise security or privacy. If you encounter sensitive data, skip it entirely. Reference environment variables by name only (e.g., "requires `DATABASE_URL`") without revealing values.
+
+## Target File
+
+```
+technical-summary.md
+```
+
+## Structure
+
+Generate the markdown file with exactly these sections, in this order:
+
+### Version Stamp (required first line)
+
+The very first line of the generated file **must** be the following HTML comment. The VibeLens component checks for this stamp and will prompt the user to regenerate if it is missing or outdated.
+
+```markdown
+<!-- vibelens format:1 -->
+```
+
+This line must appear before anything else — before the title, before any blank lines.
+
+### 1. Title
+
+```markdown
+<!-- vibelens format:1 -->
+# [App Name] — Technical Summary
+```
+
+### 2. Architecture Overview
+
+A section under `## Architecture` with 2–3 paragraphs describing the system's high-level shape:
+
+- What are the major components? (frontend, API, workers, database, external services)
+- How do they communicate? (REST, WebSocket, queues, direct calls)
+- What is the deployment topology? (monorepo vs multi-repo, where each piece runs)
+
+**Rules:**
+
+- Name specific technologies: "Express API on Railway", not "a backend server"
+- Describe the data flow at a high level: request comes in here, goes through here, ends up here
+- No code — this is prose with technical vocabulary
+- If the app has a monorepo structure, describe the package layout
+
+### 3. Stack
+
+A section under `## Stack` organized as a markdown table:
+
+```markdown
+## Stack
+
+| Layer        | Technology             | Purpose                              |
+| ------------ | ---------------------- | ------------------------------------ |
+| Frontend     | Next.js 15 (App Router)| SSR, routing, React UI               |
+| API          | Express + TypeScript   | REST endpoints, validation           |
+| Database     | PostgreSQL             | Persistent storage                   |
+| Auth         | Supabase Auth          | JWT sessions, OAuth                  |
+| Deployment   | Vercel + Railway       | Frontend hosting + API hosting       |
+```
+
+**Rules:**
+
+- One row per technology, not per package
+- "Purpose" column uses 3–6 word phrases, not sentences
+- Include every significant technology in the stack — don't omit the boring ones (linting, formatting)
+- Group by layer: Frontend, API/Backend, Database, Auth, Infrastructure, Dev Tooling
+
+### 4. Key Patterns
+
+A section under `## Key Patterns` with 3–6 patterns, each as a `###` subheading with a 2–4 sentence explanation.
+
+A "pattern" is a recurring architectural or implementation approach used in the app. Examples:
+
+- Repository pattern for data access
+- SSE streaming for real-time responses
+- Middleware pipeline for cross-cutting concerns
+- CSS custom properties for theming
+- Module-based code splitting
+
+```markdown
+### Repository Pattern
+
+Database access is encapsulated in repository modules that export pure functions returning plain objects. Handlers never write SQL directly — they call repository functions. This separates HTTP concerns from data access and makes queries testable in isolation.
+```
+
+**Rules:**
+
+- Each pattern gets a descriptive name as a heading
+- Explain what the pattern is, why it's used, and how it works at a high level
+- Reference specific technologies by name
+- No code snippets — save those for the Technical Overview
+- These should be the patterns that make this app architecturally interesting
+
+### 5. Data Flow
+
+A section under `## Data Flow` describing the primary request lifecycle as a numbered sequence:
+
+```markdown
+## Data Flow
+
+1. **User submits a form** on the frontend
+2. **Frontend sends POST** to `/api/resources` with the form data
+3. **API validates the request** using a schema validator
+4. **Service layer processes** the business logic
+5. **Repository persists** the result to the database
+6. **API returns the response** to the frontend for display
+```
+
+**Rules:**
+
+- 5–10 steps covering the primary happy path
+- Bold the first phrase of each step (the actor or action)
+- Name specific endpoints, functions, or services where it clarifies
+- One data flow only — pick the most representative request. If the app has multiple distinct flows, pick the one that showcases the most patterns and mention the others exist in a closing sentence.
+
+### 6. API Surface
+
+A section under `## API Endpoints` with a markdown table listing the key endpoints:
+
+```markdown
+## API Endpoints
+
+| Method | Path                    | Purpose                        |
+| ------ | ----------------------- | ------------------------------ |
+| POST   | `/api/resources`        | Create a new resource          |
+| GET    | `/api/resources`        | List all resources             |
+| GET    | `/api/resources/:id`    | Get a single resource by ID    |
+| DELETE | `/api/resources/:id`    | Delete a resource              |
+```
+
+**Rules:**
+
+- Only list the endpoints that exist in the app — don't invent CRUD operations that aren't implemented
+- Method, path, and a 3–6 word purpose description
+- If the app has no REST API (e.g., it's frontend-only), skip this section entirely
+- Group related endpoints together
+
+### 7. Database Schema
+
+A section under `## Database Schema` describing the key tables. For each table, a brief markdown table showing columns:
+
+**Rules:**
+
+- Only include tables that the app creates and owns — not third-party tables
+- Column, type, and a brief note (nullable, default, foreign key, etc.)
+- If the app has no database, skip this section entirely
+- Don't list every column of every table — focus on the interesting ones
+
+### 8. Environment Variables
+
+A section under `## Environment Variables` as a markdown table:
+
+**Rules:**
+
+- List every environment variable the app requires
+- Mark required vs optional
+- Brief description — what it's for, not how to get it
+- Never include actual values, secrets, or example keys
+- If the app has no env vars, skip this section
+
+### 9. Key Decisions
+
+A section under `## Decisions` with 3–5 bullet points explaining the most important architectural decisions and their reasoning:
+
+```markdown
+## Decisions
+
+- **SCSS over Tailwind** — Wanted full control over styling without learning utility classes. CSS modules keep styles scoped to each component automatically.
+- **No ORM** — The queries are simple enough that raw SQL is easier to understand and debug than learning an ORM's abstractions.
+- **Flat config ESLint** — ESLint 9's new config format is just a plain array — way easier to read than the old nested object style.
+```
+
+**Rules:**
+
+- Format: `**Decision** — Reasoning`
+- Each decision explains what was chosen AND why the alternatives were not
+- Focus on decisions where reasonable engineers might disagree
+- These should be genuinely interesting trade-offs, not obvious choices
+
+---
+
+## Content Rules
+
+1. **Length:** 800–1200 words total (excluding headings and tables)
+2. **Markdown only:** No HTML, no JSX, no frontmatter
+3. **No code blocks** of application code — use endpoint paths, table/column names, and technology names inline instead
+4. **Technical vocabulary is expected** — don't over-explain what REST or PostgreSQL is
+5. **Headings hierarchy:** `#` for title, `##` for sections, `###` for sub-items
+6. **Tables:** Use markdown tables for structured reference information (stack, endpoints, schema, env vars)
+7. **Tone:** Direct, precise, opinionated. Write as if you're briefing a senior engineer joining the project.
+
+---
+
+## Generating for a New Project
+
+1. Read the project's configuration files, README, and source code
+2. Map the architecture: what are the pieces and how do they connect?
+3. Identify the key patterns — what makes this project technically interesting?
+4. Trace the primary data flow from user action to stored result
+5. Catalog the API endpoints, database tables, and environment variables
+6. Identify the 3–5 most important architectural decisions
+7. Write the document following the structure above
+8. Verify: could a senior engineer read this and have a solid mental model of the system? If not, add detail.
+9. Verify: is anything duplicating the Summary (too high-level) or the Technical Overview (too detailed)? Adjust.
