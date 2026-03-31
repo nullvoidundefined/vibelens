@@ -74,7 +74,7 @@ const server = await createServer({
   },
   server: {
     port,
-    open: true,
+    open: process.env.VIBELENS_NO_OPEN !== '1',
   },
 });
 

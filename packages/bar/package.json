@@ -1,6 +1,6 @@
 {
     "name": "vibelens",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "description": "Understand what you built. An interactive learning panel that explains your project's tech stack, architecture, and code — with quizzes and code reviews.",
     "type": "module",
     "main": "./dist/index.cjs.js",
@@ -63,6 +63,8 @@
         "test:watch": "vitest",
         "test:unit": "vitest run tests/unit",
         "test:component": "vitest run tests/component",
+        "test:e2e": "playwright test",
+        "test:all": "vitest run && playwright test",
         "vibelens:format": "prettier --config prettier.config.vibelens.js --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
         "vibelens:format:check": "prettier --config prettier.config.vibelens.js --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
         "vibelens:lint": "eslint --config eslint.config.vibelens.js .",
@@ -117,8 +119,9 @@
         }
     },
     "devDependencies": {
-        "@testing-library/dom": "^10.4.0",
+        "@playwright/test": "^1.58.2",
         "@sveltejs/vite-plugin-svelte": "^5.0.0",
+        "@testing-library/dom": "^10.4.0",
         "@trivago/prettier-plugin-sort-imports": "^4.3.0",
         "@types/dompurify": "^3.0.5",
         "@types/react": "^19.2.14",
@@ -130,19 +133,19 @@
         "eslint-plugin-security": "^3.0.1",
         "eslint-plugin-unused-imports": "^4.4.1",
         "globals": "^15.15.0",
+        "jsdom": "^26.1.0",
         "prettier": "^3.8.1",
         "svelte": "^5.0.0",
         "typescript": "^5.7.0",
         "typescript-eslint": "^8.57.2",
-        "jsdom": "^26.1.0",
         "vite": "^6.0.0",
         "vite-plugin-solid": "^2.0.0",
         "vitest": "^3.2.1"
     },
     "dependencies": {
         "dompurify": "^3.2.3",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0",
+        "react": ">=18",
+        "react-dom": ">=18",
         "react-markdown": "^9.0.0",
         "remark-gfm": "^4.0.0"
     },
